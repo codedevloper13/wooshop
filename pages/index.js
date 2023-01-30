@@ -3,6 +3,7 @@
 import Head from "next/head";
 import Header from "../src/components/layouts/header/Header.js";
 import Footer from "../src/components/layouts/footer/Footer.js";
+import {HEADER_FOOTER_ENDPOINT} from "../src/utils/constants/endpoint.js";
 import axios from "axios";
 
 export default function Home({ data }) {
@@ -20,9 +21,7 @@ export default function Home({ data }) {
 }
 
 export async function getStaticProps() {
-	const { data } = await axios.get(
-		`${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/header-footer?header_location_id=hcms-menu-header&footer_location_id=hcms-menu-footer`
-	);
+	const { data } = await axios.get(HEADER_FOOTER_ENDPOINT);
 	return {
 		props: data || {},
 		revalidate: 1,

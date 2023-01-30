@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { isEmpty } from "lodash";
 
 const Header = ({ header }) => {
 	const { favicon, headerMenuItems, siteDescription, siteLogoUrl, siteTitle } = header || {};
@@ -13,11 +14,11 @@ const Header = ({ header }) => {
 				<link rel='icon' href={favicon} />
 			</Head>
 			<div className='header'>
-				<nav className='bg-white p-4'>
+				<nav className='bg-white p-2'>
 					<div className='flex items-center justify-between flex-wrap container mx-auto'>
 						<div className='flex items-center flex-shrink-0 text-black mr-20'>
 							{siteLogoUrl ? (
-								<Image src={siteLogoUrl} alt='' width={200} height={100} />
+								<Image src={siteLogoUrl} alt='' width={180} height={100} />
 							) : (
 								<svg
 									className='fill-current h-8 w-8 mr-2'
@@ -28,7 +29,6 @@ const Header = ({ header }) => {
 									<path d='M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z'></path>
 								</svg>
 							)}
-
 						</div>
 						<div className='block lg:hidden'>
 							<button className='flex items-center px-3 py-2 border rounded text-black border-black hover:text-black hover:border-black'>
@@ -39,22 +39,17 @@ const Header = ({ header }) => {
 							</button>
 						</div>
 						<div className='h-0 w-full overflow-hidden lg:h-full flex-grow lg:flex lg:items-center lg:w-auto'>
-							<div className='text-sm font-medium uppercase lg:flex-grow'>
-								<Link className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10' href='/categories/'>
-									Categories
-								</Link>
-								<Link className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10' href='/'>
-									Women
-								</Link>
-								<Link className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10' href='/'>
-									Kids
-								</Link>
-								<Link className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10' href='/'>
-									Home &amp; Living
-								</Link>
-								<Link className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10' href='/'>
-									Offers
-								</Link>
+							<div className='text-sm font-medium uppercase lg:flex-grow mt-2'>
+								{!isEmpty(headerMenuItems) && headerMenuItems.length
+									? headerMenuItems.map((menuitem) => (
+											<Link key={menuitem.ID} href={menuitem.url} legacyBehavior>
+												<a
+													className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
+													dangerouslySetInnerHTML={{ __html: menuitem.title }}
+												/>
+											</Link>
+									  ))
+									: null}
 							</div>
 							<div className='text-sm font-medium'>
 								<a href='#responsive-header' className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'>
