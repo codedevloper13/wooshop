@@ -6,6 +6,7 @@ const nextConfig = {
 	reactStrictMode: false,
 	swcMinify: true,
 	trailingSlash: false,
+
 	webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
 		// Important: return the modified config
 		config.watchOptions = {
@@ -14,7 +15,9 @@ const nextConfig = {
 		};
 		return config;
 	},
-
+	images: {
+		domains: ["woo.thesafetyjournies.com"],
+	},
 	sassOptions: {
 		includePaths: [path.join(__dirname, "styles")],
 	},

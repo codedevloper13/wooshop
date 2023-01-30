@@ -5,15 +5,16 @@ import Header from "../src/components/layouts/header/Header.js";
 import Footer from "../src/components/layouts/footer/Footer.js";
 import axios from "axios";
 
-export default function Home() {
+export default function Home({ data }) {
+	const { header, footer } = data;
 	return (
 		<>
-			<Header />
+			<Header header={header} />
 			<main>
 				<p className='text-red-700'>hello world</p>
 			</main>
 
-			<Footer />
+			<Footer footer={footer} />
 		</>
 	);
 }
@@ -23,9 +24,7 @@ export async function getStaticProps() {
 		`${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/rae/v1/header-footer?header_location_id=hcms-menu-header&footer_location_id=hcms-menu-footer`
 	);
 	return {
-		props: {
-			data: data || {},
-		},
+		props: data || {},
 		revalidate: 1,
 	};
 }
